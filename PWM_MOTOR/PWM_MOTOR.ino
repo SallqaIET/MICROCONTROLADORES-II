@@ -1,6 +1,6 @@
 //ESTE PROGRAMA CONTROLA LA VELOCIDAD DEL MOTOR.
 
-//HOLA VIERA HOLA
+//Respuesta desde PC VIERA 
 
 const int LED = 10;
 byte intensidad;  // Porcentaje de 0 a 100
