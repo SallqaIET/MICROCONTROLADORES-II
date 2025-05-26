@@ -1,45 +1,16 @@
-//HOLA VIERA
-//RESPONDER
-//RESPUESTA 2
-// hola
+// Motor con intensidad constante
 
 const int motor = 9;
-byte intensidad = 20;
-String buffer = "";  // Acumula los caracteres numéricos
+byte intensidad = 20;  // Valor fijo entre 0 y 255
 
 void setup() {
   pinMode(motor, OUTPUT);
-  Serial.begin(9600);
-  Serial.println("Ingrese un valor entre 0 y 100:");
+  analogWrite(motor, intensidad);  // Aplicar intensidad una vez al iniciar
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    char numero = Serial.read();
-
-    // Ignorar saltos de línea
-    if (numero == '\n' || numero == '\r') {
-      if (buffer.length() > 0) {
-        int valor = buffer.toInt();  // Convierte el texto a número
-
-        if (valor >= 0 && valor <= 100) {
-          intensidad = map(valor, 0, 100, 0, 255);
-          Serial.print("PWM actualizado a: ");
-          Serial.print(valor);
-          Serial.println("%");
-        } else {
-          Serial.println("Valor fuera de rango (0-100).");
-        }
-
-        buffer = ""; // Limpiar para la próxima entrada
-      }
-    }
-    // Acumular solo si es número
-    else if (isDigit(numero)) {
-      buffer += numero;
-    }
-  }
-
+  // No es necesario actualizar constantemente si no cambia
+  // Pero si quieres mantenerlo, puedes dejar esto:
   analogWrite(motor, intensidad);
   delay(10);
 }
