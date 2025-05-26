@@ -4,7 +4,7 @@
 // hola
 
 const int motor = 9;
-byte intensidad = 0;
+byte intensidad = 20;
 String buffer = "";  // Acumula los caracteres numéricos
 
 void setup() {
