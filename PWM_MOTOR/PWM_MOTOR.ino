@@ -1,5 +1,5 @@
 //HOLA VIERA
-
+//RESPONDER
 const int motor = 9;
 byte intensidad = 0;
 String buffer = "";  // Acumula los caracteres numéricos
