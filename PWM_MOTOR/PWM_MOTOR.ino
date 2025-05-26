@@ -1,6 +1,8 @@
 //HOLA VIERA
 //RESPONDER
 //RESPUESTA 2
+// hola
+
 const int motor = 9;
 byte intensidad = 0;
 String buffer = "";  // Acumula los caracteres numéricos
