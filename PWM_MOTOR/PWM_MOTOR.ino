@@ -1,33 +1,41 @@
-//ESTE PROGRAMA CONTROLA LA VELOCIDAD DEL MOTOR.
 
-//Respuesta desde PC VIERA 
-
-const int LED = 10;
-byte intensidad;  // Porcentaje de 0 a 100
+const int motor = 9;
+byte intensidad = 0;
+String buffer = "";  // Acumula los caracteres numéricos
 
 void setup() {
-  pinMode(LED, OUTPUT);
-  Serial.begin(9600);  
+  pinMode(motor, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Ingrese un valor entre 0 y 100:");
 }
 
 void loop() {
-  // Si llega un nuevo dato por Serial
   if (Serial.available() > 0) {
-    int valor = Serial.parseInt();  // Lee el número
+    char numero = Serial.read();
 
-    // Validar rango
-    if (valor >= 0 && valor <= 100) {
-      intensidad = map(valor, 0, 100, 0, 255); // Convertir a 0–255
-      Serial.print("PWM actualizado a: ");
-      Serial.print(valor);
-      Serial.println("%");
-    } else {
-      Serial.println("Valor fuera de rango (0-100).");
+    // Ignorar saltos de línea
+    if (numero == '\n' || numero == '\r') {
+      if (buffer.length() > 0) {
+        int valor = buffer.toInt();  // Convierte el texto a número
+
+        if (valor >= 0 && valor <= 100) {
+          intensidad = map(valor, 0, 100, 0, 255);
+          Serial.print("PWM actualizado a: ");
+          Serial.print(valor);
+          Serial.println("%");
+        } else {
+          Serial.println("Valor fuera de rango (0-100).");
+        }
+
+        buffer = ""; // Limpiar para la próxima entrada
+      }
+    }
+    // Acumular solo si es número
+    else if (isDigit(numero)) {
+      buffer += numero;
     }
   }
 
-  // Aplicar siempre el último valor al PWM
-  analogWrite(LED, intensidad);
-
-  delay(10); // Delay corto para evitar sobrecargar el loop
+  analogWrite(motor, intensidad);
+  delay(10);
 }
