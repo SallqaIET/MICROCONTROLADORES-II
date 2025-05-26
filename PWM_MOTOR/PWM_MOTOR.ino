@@ -9,8 +9,6 @@ void setup() {
 }
 
 void loop() {
-  // No es necesario actualizar constantemente si no cambia
-  // Pero si quieres mantenerlo, puedes dejar esto:
   analogWrite(motor, intensidad);
   delay(10);
 }
